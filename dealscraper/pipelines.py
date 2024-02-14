@@ -10,7 +10,7 @@ class DuplicatesPipeline:
     def process_item(self, item, spider):
         adapter = ItemAdapter(item)
         if adapter['name'] in self.names_seen:
-            raise DropItem(f"Duplicate item found: {item!r}")
+            raise DropItem(f"Duplicate item found: {adapter['name']}")
         else:
             self.names_seen.add(adapter['name'])
             return item
