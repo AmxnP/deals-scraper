@@ -65,7 +65,9 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'dealscraper.pipelines.DuplicatesPipeline': 1,
+    'dealscraper.pipelines.DuplicatesPipeline': 100,
+    'dealscraper.pipelines.DataCleanerPipeline': 200,
+    'dealscraper.pipelines.SavingToMySQLPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
