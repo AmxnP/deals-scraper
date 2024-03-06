@@ -17,6 +17,7 @@ class TescoSpider(scrapy.Spider):
             loader.add_css('name', 'span.styled__Text-sc-1i711qa-1.xZAYu.ddsweb-link__text')
             loader.add_css('price', 'p.styled__StyledHeading-sc-119w3hf-2.jWPEtj.styled__Text-sc-8qlq5b-1.lnaeiZ.beans-price__text')
             loader.add_css('discount', 'span.offer-text')
+            loader.add_css('link', 'a.styled__Anchor-sc-1i711qa-0.hXcydL.ddsweb-link__anchor::attr(href)')
 
             yield loader.load_item()
 

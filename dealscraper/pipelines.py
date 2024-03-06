@@ -8,11 +8,8 @@ class DataCleanerPipeline:
     def process_item(self, item, spider):
         adapter = ItemAdapter(item)
 
-        name = adapter['name'].lower().replace('tesco', '')
-        adapter['name'] = name.strip().lstrip().rstrip()
-
-        if '&amp;' in adapter['name']:
-            adapter['name'] = adapter['name'].replace('&amp;', '&')
+        name = adapter['name'].lower().replace('tesco', '').replace('&amp;', '&')
+        adapter['name'] = name.strip().title()
 
         if 'Clubcard Price' in adapter['discount']:
             adapter['discount'] = adapter['discount'].split('Clubcard Price')[0].strip()
@@ -60,7 +57,7 @@ class SavingToMySQLPipeline(object):
 
     def create_table(self):
         self.curr.execute("""DROP TABLE IF EXISTS tesco_products""")
-        self.curr.execute("""create table tesco_products (name text,price text,discount text)""")
+        self.curr.execute("""create table tesco_products (name text,price text,discount text, link text)""")
 
     def process_item(self, item, spider):
         self.store_db(item)
@@ -68,9 +65,10 @@ class SavingToMySQLPipeline(object):
 
     def store_db(self, item):
         adapter = ItemAdapter(item)
-        self.curr.execute(""" insert into tesco_products values (%s,%s,%s)""", (
+        self.curr.execute(""" insert into tesco_products values (%s,%s,%s,%s)""", (
             adapter["name"],
             adapter["price"],
             adapter["discount"],
+            adapter["link"],
         ))
         self.conn.commit()
