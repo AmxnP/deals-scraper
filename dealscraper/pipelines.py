@@ -64,7 +64,6 @@ class SavingToMySQLPipeline(object):
 
     def process_item(self, item, spider):
         self.store_db(item)
-        # we need to return the item below as Scrapy expects us to!
         return item
 
     def store_db(self, item):
